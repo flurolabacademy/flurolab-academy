@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flurolab Academy — Formación Médica Práctica con Tecnología</title>
+    <script src="https://js.culqi.com/culqi-4.0.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0f1a;
+            --bg-secondary: #0d1321;
+            --bg-card: #111827;
+            --bg-hover: #1a2332;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.3);
+            --accent-secondary: #60a5fa;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --cardio: #ef4444;
+            --neuro: #8b5cf6;
+            --radio: #3b82f6;
+            --enfer: #ec4899;
+            --sim: #10b981;
+            --mat: #f59e0b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Background particles */
+        .bg-particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        .particle {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 0.75rem 2rem;
+            background: rgba(10, 15, 26, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent);
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+        .nav-cta {
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        /* Sections */
+        .section {
+            position: relative;
+            z-index: 1;
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+        .hero-content {
+            max-width: 800px;
+        }
+        .hero-logo {
+            width: 180px;
+            height: auto;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 30px var(--accent-glow));
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 var(--accent-glow); }
+            50% { box-shadow: 0 0 20px 5px var(--accent-glow); }
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.25rem;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 0.9rem 2rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px var(--accent-glow);
+        }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1.5px solid var(--border);
+            padding: 0.9rem 2rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .btn-outline {
+            background: transparent;
+            color: var(--accent);
+            border: 1.5px solid var(--accent);
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .btn-outline:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Categories */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .category-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        .category-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+        .category-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .category-card h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .category-card p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .category-card.cardio:hover { border-color: var(--cardio); }
+        .category-card.neuro:hover { border-color: var(--neuro); }
+        .category-card.radio:hover { border-color: var(--radio); }
+        .category-card.enfer:hover { border-color: var(--enfer); }
+        .category-card.sim:hover { border-color: var(--sim); }
+        .category-card.mat:hover { border-color: var(--mat); }
+
+        /* Courses */
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 0.75rem;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            font-size: 0.95rem;
+        }
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .course-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .course-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+        .course-image {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .course-image::before {
+            content: '';
+            position: absolute;
+            width: 200%; height: 200%;
+            background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.03) 10px, rgba(255,255,255,0.03) 20px);
+            animation: scan 10s linear infinite;
+        }
+        @keyframes scan {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        .course-badge {
+            position: absolute;
+            top: 0.75rem; right: 0.75rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            z-index: 2;
+        }
+        .course-content {
+            padding: 1.25rem;
+        }
+        .course-category {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.6rem;
+            border-radius: 50px;
+            margin-bottom: 0.5rem;
+        }
+        .cat-cardio { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+        .cat-radio { background: rgba(59, 130, 246, 0.15); color: #93c5fd; }
+        .cat-sim { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; }
+        .cat-mat { background: rgba(245, 158, 11, 0.15); color: #fcd34d; }
+        .cat-enfer { background: rgba(236, 72, 153, 0.15); color: #f9a8d4; }
+        .cat-neuro { background: rgba(139, 92, 246, 0.15); color: #c4b5fd; }
+        .course-instructor {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .instructor-avatar {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+        }
+        .instructor-name {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .course-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+        .course-description {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+        .course-meta {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+        .course-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+        .course-price {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .course-price .original {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            margin-left: 0.4rem;
+        }
+        .btn-buy {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-buy:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        /* Instructors CTA */
+        .instructor-cta {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1.5px dashed var(--accent);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .instructor-cta h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .instructor-cta p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 1.5rem;
+            font-size: 0.9rem;
+        }
+        .instructor-benefits {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .instructor-benefits span {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Instructors */
+        .instructors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+        .instructor-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .instructor-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+        }
+        .instructor-card .avatar {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .instructor-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+        .instructor-card .specialty {
+            color: var(--accent-secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .instructor-card p {
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+            margin-bottom: 0.75rem;
+        }
+        .instructor-stats {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem 1.5rem;
+            text-align: center;
+        }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .footer-logo img {
+            height: 36px;
+        }
+        .footer-logo span {
+            font-size: 1.25rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer p {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Checkout Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            max-width: 520px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        .modal-header {
+            padding: 1.5rem 1.5rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            width: 32px; height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+        .modal-close:hover {
+            color: var(--text-primary);
+            background: var(--bg-hover);
+        }
+        .modal-body { padding: 1.5rem; }
+        .checkout-summary {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+        .checkout-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .checkout-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+            color: var(--accent);
+        }
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .payment-method {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .payment-method:hover { border-color: var(--accent); }
+        .payment-method.selected {
+            border-color: var(--accent);
+            background: rgba(59, 130, 246, 0.05);
+        }
+        .payment-method-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .payment-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        .payment-icon.card { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+        .payment-icon.yape { background: linear-gradient(135deg, #7c3aed, #a855f7); }
+        .payment-icon.plin { background: linear-gradient(135deg, #059669, #10b981); }
+        .payment-icon.cash { background: linear-gradient(135deg, #d97706, #f59e0b); }
+        .payment-title { font-weight: 600; font-size: 0.9rem; }
+        .payment-subtitle { font-size: 0.78rem; color: var(--text-muted); }
+        .payment-details {
+            display: none;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+        .payment-method.selected .payment-details { display: block; }
+        .form-group { margin-bottom: 0.75rem; }
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 0.35rem;
+            color: var(--text-secondary);
+        }
+        .form-input {
+            width: 100%;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.7rem 0.9rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: border-color 0.3s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+        .qr-container {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+        }
+        .qr-placeholder {
+            width: 150px; height: 150px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            border-radius: 12px;
+            margin: 0 auto 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .qr-number {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: monospace;
+        }
+        .qr-instructions {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            margin-top: 0.35rem;
+        }
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--success);
+            color: white;
+            text-decoration: none;
+            padding: 0.7rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        .whatsapp-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.25rem; }
+            .hero-logo { width: 140px; }
+            .section { padding: 3rem 1rem; }
+            .nav-links { display: none; }
+            .form-row { grid-template-columns: 1fr; }
+            .navbar { padding: 0.75rem 1rem; }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    </style>
+</head>
+<body>
+    <!-- Background Particles -->
+    <div class="bg-particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="logo.png" alt="Flurolab Academy">
+            <span class="logo-text">Flurolab Academy</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#categorias" class="active">Categorías</a></li>
+            <li><a href="#cursos">Cursos</a></li>
+            <li><a href="#instructores">Instructores</a></li>
+        </ul>
+        <button class="nav-cta" onclick="openCheckout('demo')">Ingresar</button>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero section">
+        <div class="hero-content fade-in">
+            <img src="logo.png" alt="Flurolab Academy" class="hero-logo">
+            <div class="hero-badge">
+                <span>🚀</span> La primera plataforma de simulación médica en español
+            </div>
+            <h1>Aprende procedimientos médicos<br>como si estuvieras en sala</h1>
+            <p>Cursos prácticos, simuladores interactivos y contenido creado por profesionales de salud para profesionales de salud. De cualquier especialidad.</p>
+            <div class="hero-cta">
+                <a href="#categorias" class="btn-primary">Explorar Categorías</a>
+                <a href="#instructores" class="btn-secondary">Enseñar en Flurolab</a>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Alumnos capacitados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Cursos disponibles</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Especialidades</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Satisfacción</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="section" id="categorias">
+        <h2 class="section-title">Explora por Especialidad</h2>
+        <p class="section-subtitle">Formación práctica en múltiples áreas de la medicina intervencionista</p>
+
+        <div class="categories-grid">
+            <a class="category-card cardio" href="#cursos">
+                <div class="icon">🫀</div>
+                <h4>Cardiología</h4>
+                <p>Hemodinamia, cateterismo, angioplastia</p>
+            </a>
+            <a class="category-card neuro" href="#cursos">
+                <div class="icon">🧠</div>
+                <h4>Neurología</h4>
+                <p>Neurointervencionismo, embolización</p>
+            </a>
+            <a class="category-card radio" href="#cursos">
+                <div class="icon">🔬</div>
+                <h4>Radiología</h4>
+                <p>Intervencionista, protección, dosis</p>
+            </a>
+            <a class="category-card enfer" href="#cursos">
+                <div class="icon">🏥</div>
+                <h4>Enfermería</h4>
+                <p>Sala de hemodinamia, instrumentación</p>
+            </a>
+            <a class="category-card sim" href="#cursos">
+                <div class="icon">🎮</div>
+                <h4>Simuladores</h4>
+                <p>Arco en C, angiografos, VR</p>
+            </a>
+            <a class="category-card mat" href="#cursos">
+                <div class="icon">📋</div>
+                <h4>Material Médico</h4>
+                <p>Catéteres, stents, guías, introductores</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Courses -->
+    <section class="section" id="cursos">
+        <h2 class="section-title">Cursos Destacados</h2>
+        <p class="section-subtitle">Los más elegidos por nuestros alumnos</p>
+
+        <div class="courses-grid">
+            <div class="course-card">
+                <div class="course-image" style="background: linear-gradient(135deg, #1e3a5f, #3b82f6);">
+                    <span>🫀</span>
+                    <span class="course-badge">MÁS VENDIDO</span>
+                </div>
+                <div class="course-content">
+                    <span class="course-category cat-cardio">Cardiología</span>
+                    <div class="course-instructor">
+                        <div class="instructor-avatar">FL</div>
+                        <span class="instructor-name">Flurolab Team</span>
+                    </div>
+                    <h3 class="course-title">Intervencionismo sin Pánico</h3>
+                    <p class="course-description">Guía práctica para tu primer día en hemodinamia. Posiciones, protección radiológica y protocolos paso a paso.</p>
+                    <div class="course-meta">
+                        <span>📹 12 videos</span>
+                        <span>⏱ 4.5h</span>
+                        <span>👥 120</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">S/49.90<span class="original">S/89.90</span></div>
+                        <button class="btn-buy" onclick="openCheckout('intervencionismo')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image" style="background: linear-gradient(135deg, #312e81, #6366f1);">
+                    <span>🧠</span>
+                    <span class="course-badge">NUEVO</span>
+                </div>
+                <div class="course-content">
+                    <span class="course-category cat-neuro">Neurología</span>
+                    <div class="course-instructor">
+                        <div class="instructor-avatar">DR</div>
+                        <span class="instructor-name">Dr. Ramírez</span>
+                    </div>
+                    <h3 class="course-title">Neurointervencionismo Básico</h3>
+                    <p class="course-description">Fundamentos de embolización, manejo de aneurismas y flujo en neurohemodinamia.</p>
+                    <div class="course-meta">
+                        <span>📹 10 videos</span>
+                        <span>⏱ 5h</span>
+                        <span>👥 30</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">S/79.90</div>
+                        <button class="btn-buy" onclick="openCheckout('neuro')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image" style="background: linear-gradient(135deg, #1e3a5f, #3b82f6);">
+                    <span>🛡️</span>
+                </div>
+                <div class="course-content">
+                    <span class="course-category cat-radio">Radiología</span>
+                    <div class="course-instructor">
+                        <div class="instructor-avatar">FL</div>
+                        <span class="instructor-name">Flurolab Team</span>
+                    </div>
+                    <h3 class="course-title">Protección Radiológica en Sala</h3>
+                    <p class="course-description">ALARA en la práctica. Blindajes, dosimetría, posiciones seguras y reducción de dosis.</p>
+                    <div class="course-meta">
+                        <span>📹 8 videos</span>
+                        <span>⏱ 3h</span>
+                        <span>👥 45</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">S/39.90</div>
+                        <button class="btn-buy" onclick="openCheckout('proteccion')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image" style="background: linear-gradient(135deg, #065f46, #10b981);">
+                    <span>🎮</span>
+                </div>
+                <div class="course-content">
+                    <span class="course-category cat-sim">Simuladores</span>
+                    <div class="course-instructor">
+                        <div class="instructor-avatar">FL</div>
+                        <span class="instructor-name">Flurolab Team</span>
+                    </div>
+                    <h3 class="course-title">Simulador de Arco en C</h3>
+                    <p class="course-description">Practica posiciones, proyecciones y configuraciones en un simulador web interactivo.</p>
+                    <div class="course-meta">
+                        <span>🎮 Interactivo</span>
+                        <span>⏱ Ilimitado</span>
+                        <span>👥 200</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">S/29.90<span class="original">S/59.90</span></div>
+                        <button class="btn-buy" onclick="openCheckout('simulador')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image" style="background: linear-gradient(135deg, #831843, #ec4899);">
+                    <span>🏥</span>
+                </div>
+                <div class="course-content">
+                    <span class="course-category cat-enfer">Enfermería</span>
+                    <div class="course-instructor">
+                        <div class="instructor-avatar">EN</div>
+                        <span class="instructor-name">Enf. López</span>
+                    </div>
+                    <h3 class="course-title">Instrumentación en Hemodinamia</h3>
+                    <p class="course-description">Mesa de trabajo, preparación de material, asistencia al médico y manejo de emergencias.</p>
+                    <div class="course-meta">
+                        <span>📹 14 videos</span>
+                        <span>⏱ 6h</span>
+                        <span>👥 80</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">S/59.90</div>
+                        <button class="btn-buy" onclick="openCheckout('enfermeria')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-image" style="background: linear-gradient(135deg, #92400e, #f59e0b);">
+                    <span>📋</span>
+                </div>
+                <div class="course-content">
+                    <span class="course-category cat-mat">Material Médico</span>
+                    <div class="course-instructor">
+                        <div class="instructor-avatar">FL</div>
+                        <span class="instructor-name">Flurolab Team</span>
+                    </div>
+                    <h3 class="course-title">Catéteres y Stents: Guía Práctica</h3>
+                    <p class="course-description">Qué usar, cuándo y por qué. Guías, introductores, stents y más en radiología intervencionista.</p>
+                    <div class="course-meta">
+                        <span>📹 15 videos</span>
+                        <span>⏱ 6h</span>
+                        <span>👥 Próx.</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">S/59.90</div>
+                        <button class="btn-buy" onclick="openCheckout('materiales')">Comprar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instructor CTA -->
+    <section class="section" id="instructores">
+        <h2 class="section-title">¿Eres profesional de salud?</h2>
+        <p class="section-subtitle">Comparte tu experiencia y genera ingresos</p>
+
+        <div class="instructor-cta">
+            <h3>Enseña en Flurolab Academy</h3>
+            <p>¿Eres médico, tecnólogo, enfermero o especialista con experiencia en sala? Convierte tu conocimiento en un curso y llega a cientos de profesionales.</p>
+            <div class="instructor-benefits">
+                <span>✅ 70% de comisión por venta</span>
+                <span>✅ Soporte técnico total</span>
+                <span>✅ Alcance nacional</span>
+            </div>
+            <a href="#" class="btn-outline">Aplicar como instructor</a>
+        </div>
+
+        <div class="instructors-grid" style="margin-top: 3rem;">
+            <div class="instructor-card">
+                <div class="avatar">Tú</div>
+                <h3>Tú</h3>
+                <div class="specialty">Radiología Intervencionista</div>
+                <p>Tecnólogo Médico — Fundador de Flurolab</p>
+                <div class="instructor-stats">
+                    <span>3 cursos</span>
+                    <span>500+ alumnos</span>
+                </div>
+            </div>
+            <div class="instructor-card" style="opacity: 0.6; border-style: dashed;">
+                <div class="avatar" style="background: var(--border);">+</div>
+                <h3>¿Tu especialidad?</h3>
+                <div class="specialty">Cardiología, Neuro, Enfermería...</div>
+                <p>Únete y monetiza tu conocimiento</p>
+                <div class="instructor-stats">
+                    <span>70% comisión</span>
+                    <span>Soporte total</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <img src="logo.png" alt="Flurolab">
+            <span>Flurolab Academy</span>
+        </div>
+        <div class="footer-links">
+            <a href="#">Términos</a>
+            <a href="#">Privacidad</a>
+            <a href="#">Contacto</a>
+            <a href="#">Ser Instructor</a>
+        </div>
+        <p>Formación médica práctica con tecnología — De profesionales, para profesionales</p>
+        <p style="margin-top: 0.5rem; font-size: 0.75rem;">© 2026 Flurolab Academy. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- Checkout Modal -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Finalizar Compra</h2>
+                <button class="modal-close" onclick="closeCheckout()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="checkout-summary">
+                    <div class="checkout-item">
+                        <span id="courseName">Curso seleccionado</span>
+                        <span id="coursePrice">S/0.00</span>
+                    </div>
+                    <div class="checkout-item">
+                        <span>Comisión plataforma</span>
+                        <span style="color: var(--success);">incluida</span>
+                    </div>
+                    <div class="checkout-total">
+                        <span>Total</span>
+                        <span id="totalPrice">S/0.00</span>
+                    </div>
+                </div>
+
+                <div class="payment-methods">
+                    <div class="payment-method" onclick="selectPayment(this, 'card')">
+                        <div class="payment-method-header">
+                            <div class="payment-icon card">💳</div>
+                            <div>
+                                <div class="payment-title">Tarjeta de crédito/débito</div>
+                                <div class="payment-subtitle">Visa, Mastercard, American Express</div>
+                            </div>
+                        </div>
+                        <div class="payment-details">
+                            <div class="form-group">
+                                <label class="form-label">Número de tarjeta</label>
+                                <input type="text" class="form-input" placeholder="4111 1111 1111 1111" id="cardNumber">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Fecha exp.</label>
+                                    <input type="text" class="form-input" placeholder="MM/AA" id="cardExpiry">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">CVC</label>
+                                    <input type="text" class="form-input" placeholder="123" id="cardCvc">
+                                </div>
+                            </div>
+                            <button class="btn-primary" style="width: 100%; margin-top: 0.5rem;" onclick="processCard()">Pagar ahora</button>
+                            <p style="font-size: 0.7rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem;">🔒 Pagos procesados por Culqi. Datos encriptados.</p>
+                        </div>
+                    </div>
+
+                    <div class="payment-method" onclick="selectPayment(this, 'yape')">
+                        <div class="payment-method-header">
+                            <div class="payment-icon yape">📱</div>
+                            <div>
+                                <div class="payment-title">Yape</div>
+                                <div class="payment-subtitle">Pago rápido con QR</div>
+                            </div>
+                        </div>
+                        <div class="payment-details">
+                            <div class="qr-container">
+                                <div class="qr-placeholder">📱</div>
+                                <div class="qr-number">999 888 777</div>
+                                <p class="qr-instructions">Escanea el QR o busca el número en Yape</p>
+                            </div>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                                1. Abre Yape y escanea el QR<br>
+                                2. Ingresa el monto exacto<br>
+                                3. Envía el screenshot de confirmación
+                            </p>
+                            <a href="https://wa.me/51999999999?text=Hola%2C%20acabo%20de%20pagar%20por%20Yape%20para%20el%20curso%20de%20Flurolab%20Academy" class="whatsapp-btn" target="_blank">📱 Confirmar por WhatsApp</a>
+                        </div>
+                    </div>
+
+                    <div class="payment-method" onclick="selectPayment(this, 'plin')">
+                        <div class="payment-method-header">
+                            <div class="payment-icon plin">💚</div>
+                            <div>
+                                <div class="payment-title">Plin</div>
+                                <div class="payment-subtitle">Transferencia instantánea</div>
+                            </div>
+                        </div>
+                        <div class="payment-details">
+                            <div class="qr-container">
+                                <div class="qr-placeholder">💚</div>
+                                <div class="qr-number">999 888 777</div>
+                                <p class="qr-instructions">Busca el número en Plin</p>
+                            </div>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                                1. Abre Plin y busca el número<br>
+                                2. Transfiere el monto exacto<br>
+                                3. Envía el screenshot de confirmación
+                            </p>
+                            <a href="https://wa.me/51999999999?text=Hola%2C%20acabo%20de%20pagar%20por%20Plin%20para%20el%20curso%20de%20Flurolab%20Academy" class="whatsapp-btn" target="_blank">📱 Confirmar por WhatsApp</a>
+                        </div>
+                    </div>
+
+                    <div class="payment-method" onclick="selectPayment(this, 'cash')">
+                        <div class="payment-method-header">
+                            <div class="payment-icon cash">💵</div>
+                            <div>
+                                <div class="payment-title">Pago Efectivo</div>
+                                <div class="payment-subtitle">Agentes BCP, BBVA, Interbank</div>
+                            </div>
+                        </div>
+                        <div class="payment-details">
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                                1. Genera tu código de pago<br>
+                                2. Acude a cualquier agente<br>
+                                3. Paga en efectivo<br>
+                                4. El curso se activa en 24-48h
+                            </p>
+                            <button class="btn-secondary" style="width: 100%;" onclick="generateCashCode()">Generar código de pago</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const particles = document.getElementById('particles');
+        for (let i = 0; i < 40; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = Math.random() * 100 + '%';
+            p.style.animationDelay = Math.random() * 15 + 's';
+            p.style.animationDuration = (10 + Math.random() * 20) + 's';
+            particles.appendChild(p);
+        }
+
+        const courses = {
+            'intervencionismo': { name: 'Intervencionismo sin Pánico', price: 49.90 },
+            'neuro': { name: 'Neurointervencionismo Básico', price: 79.90 },
+            'proteccion': { name: 'Protección Radiológica', price: 39.90 },
+            'simulador': { name: 'Simulador de Arco en C', price: 29.90 },
+            'enfermeria': { name: 'Instrumentación en Hemodinamia', price: 59.90 },
+            'materiales': { name: 'Catéteres y Stents', price: 59.90 },
+            'demo': { name: 'Acceso a Plataforma', price: 0 }
+        };
+        let currentCourse = null;
+
+        function openCheckout(courseId) {
+            currentCourse = courses[courseId] || courses['demo'];
+            document.getElementById('courseName').textContent = currentCourse.name;
+            document.getElementById('coursePrice').textContent = 'S/' + currentCourse.price.toFixed(2);
+            document.getElementById('totalPrice').textContent = 'S/' + currentCourse.price.toFixed(2);
+            document.getElementById('checkoutModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        function selectPayment(el, method) {
+            document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+        function processCard() {
+            const btn = event.target;
+            btn.textContent = 'Procesando...';
+            btn.disabled = true;
+            setTimeout(() => {
+                alert('✅ Pago exitoso (DEMO)\n\nEn producción se conectará con Culqi.');
+                btn.textContent = 'Pagar ahora';
+                btn.disabled = false;
+                closeCheckout();
+            }, 2000);
+        }
+        function generateCashCode() {
+            const code = 'FL' + Date.now().toString(36).toUpperCase();
+            alert('🧾 Código de pago: ' + code + '\n\nAcude a cualquier agente BCP, BBVA o Interbank.');
+        }
+        document.getElementById('checkoutModal').addEventListener('click', function(e) {
+            if (e.target === this) closeCheckout();
+        });
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            navbar.style.background = window.scrollY > 50 ? 'rgba(10, 15, 26, 0.95)' : 'rgba(10, 15, 26, 0.85)';
+        });
+    </script>
+</body>
+</html>
